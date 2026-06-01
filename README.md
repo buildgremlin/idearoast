@@ -59,6 +59,20 @@ DEEPSEEK_SHADOW_MODEL=deepseek-v4-flash
 
 Set these values in your local server environment, or load a private `.env` with your own tooling. Do not commit `.env`. The frontend must never receive a provider API key.
 
+## Extending With Your Own Model
+
+IdeaRoast is local-first. You can keep the browser UI unchanged and add your own server-side provider adapter.
+
+Start from:
+
+- `tools/local-static-server.mjs`
+- `tools/ai-doorway-judge-runtime.mjs`
+- `tools/little-walker-runtime.mjs`
+- `data/little-walker-packet.schema.js`
+- `tools/validate-little-walker-packet.mjs`
+
+Provider keys must stay server-side. Do not expose API keys in `index.html`, `app.js`, browser storage, or committed files.
+
 ## What It Does
 
 IdeaRoast is not a generic chatbot wrapper. Its product shape is a constrained idea-routing interface:
