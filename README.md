@@ -73,6 +73,18 @@ Start from:
 
 Provider keys must stay server-side. Do not expose API keys in `index.html`, `app.js`, browser storage, or committed files.
 
+For a longer guide, see `docs/ADAPTER_GUIDE.md`.
+
+## Contributing
+
+If you want to keep exploring IdeaRoast, start with:
+
+- `ROADMAP.md`
+- `CONTRIBUTING.md`
+- `docs/ADAPTER_GUIDE.md`
+
+The best next contributions are small: clearer setup docs, safer adapter examples, better route validation, and less mechanical Little Walker outputs.
+
 ## What It Does
 
 IdeaRoast is not a generic chatbot wrapper. Its product shape is a constrained idea-routing interface:
