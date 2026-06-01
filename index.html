@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IdeaRoast</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="control-panel" aria-label="Idea 输入">
+        <div class="brand-row">
+          <div class="brand-mark" aria-hidden="true">IR</div>
+          <div>
+            <h1>IdeaRoast</h1>
+            <p>小产品 idea 替身试走器</p>
+          </div>
+        </div>
+
+        <aside class="self-test-note" aria-label="自测提示">
+          <strong>这是什么？</strong>
+          <p>它会替你先摔一跤，回来只告诉你：哪里太重、哪条还活、下一步先试什么。适合 AI 工具、内容账号、开源项目和独立开发小产品；不适合科幻发明、真实硬科技奇迹、违法高风险项目或过于宏大的愿景。</p>
+        </aside>
+
+        <label class="case-field">
+          <span>试几个小产品例子</span>
+          <select id="caseSelect"></select>
+        </label>
+
+        <label class="field">
+          <span>项目想法</span>
+          <textarea id="ideaInput" placeholder="例如：我想做一个帮独立开发者拆 MVP 的 AI 工具"></textarea>
+        </label>
+
+        <div class="button-row">
+          <button id="roastIdea" class="primary-button" type="button">丢给小人</button>
+          <button id="nextRound" class="ghost-button" type="button" disabled>继续</button>
+          <button id="resetSim" class="ghost-button" type="button">重置</button>
+        </div>
+
+        <div class="round-card">
+          <span id="roundLabel">第 0 轮</span>
+          <strong id="roundTitle">idea 准备落到地球上</strong>
+        </div>
+
+        <details class="control-details" id="controlDetails">
+          <summary>查看详细记录</summary>
+
+          <div class="bite-card" id="biteCard" aria-live="polite">
+            <span>当前摩擦</span>
+            <strong>等待开始</strong>
+            <p>先看这个 idea 会被哪几件现实问题卡住。</p>
+          </div>
+
+          <div class="clarity-card" id="clarityCard" aria-live="polite"></div>
+
+          <div class="path-card" id="pathCard" aria-label="现实路径">
+            <span>现实路径</span>
+            <ol class="path-steps">
+              <li data-step="A">
+                <small>A 原始想法</small>
+                <strong id="pathStart">等待投放</strong>
+              </li>
+              <li data-step="B">
+                <small>B 最小可做版本</small>
+                <strong id="pathMinimum">等待拆小</strong>
+              </li>
+              <li data-step="C">
+                <small>C 先试哪一步</small>
+                <strong id="pathValidation">等待验证动作</strong>
+              </li>
+            </ol>
+          </div>
+
+          <div class="friction-library-card" id="frictionLibraryCard" aria-label="本轮选中的摩擦类型">
+            <span>本轮摩擦</span>
+            <ol class="friction-track" id="frictionTrack"></ol>
+          </div>
+
+          <div class="seed-row">
+            <label class="seed-field">
+              <span>随机性</span>
+              <input id="seedInput" type="text" value="earth-clock-01" spellcheck="false" />
+            </label>
+            <button id="randomSeed" class="ghost-button seed-button" type="button">换一轮</button>
+          </div>
+        </details>
+      </section>
+
+      <section class="stage-panel" aria-label="小人试走路线板">
+        <div class="stage-topbar">
+          <span id="sceneName">小人路线板</span>
+          <span id="ideaName">小产品想法</span>
+        </div>
+
+        <div class="pixel-stage route-board-stage" id="stage">
+          <img class="route-board-stage-bg" src="./assets/route-board-stage-bg.png" alt="" aria-hidden="true" />
+          <ol class="route-board" id="routeBoard" aria-label="小人试走路线">
+            <li class="route-board-node" data-route-step="1">
+              <span>1</span>
+              <strong>出发</strong>
+            </li>
+            <li class="route-board-node" data-route-step="2">
+              <span>2</span>
+              <strong>卡住</strong>
+            </li>
+            <li class="route-board-node" data-route-step="3">
+              <span>3</span>
+              <strong>想到</strong>
+            </li>
+            <li class="route-board-node" data-route-step="4">
+              <span>4</span>
+              <strong>变形</strong>
+            </li>
+            <li class="route-board-node" data-route-step="5">
+              <span>5</span>
+              <strong>带回</strong>
+            </li>
+          </ol>
+          <p class="route-board-hint" id="routeBoardHint">写一句小产品想法，我替你先走一圈。</p>
+          <div class="stage-hidden-state" aria-hidden="true">
+            <div class="idea-board" id="ideaBoard">
+              <strong>小产品想法</strong>
+            </div>
+            <div class="branch-board" id="branchBoard">分支：0</div>
+          </div>
+          <span class="route-board-landing-shadow" aria-hidden="true"></span>
+          <span class="solo-alert" id="soloAlert" aria-hidden="true">!</span>
+          <aside class="stage-dialogue" id="stageDialogue" aria-live="polite"></aside>
+        </div>
+      </section>
+
+      <section class="signal-panel" aria-label="沙盒状态">
+        <header class="signal-panel-header">
+          <strong>小人回执</strong>
+          <span>试走结果速览</span>
+        </header>
+
+        <section class="walk-summary-card" id="walkSummaryCard" aria-live="polite"></section>
+
+        <details class="developer-details" id="developerDetails">
+          <summary>Model preview / JSON</summary>
+          <div class="shadow-card" id="deepSeekShadowCard" aria-live="polite">
+            <span>开发者影子试跑</span>
+            <p class="shadow-toggle">
+              <strong>Doorway model adapter pilot</strong>
+            </p>
+            <p id="deepSeekDoorwayStatus">默认试运行。可选模型只判断 doorway，失败回本地 gate。</p>
+            <div class="shadow-summary" id="aiDoorwayJudgeSummary" hidden></div>
+            <label class="shadow-toggle">
+              <input id="deepSeekShadowToggle" type="checkbox" />
+              <strong>Model shadow / DeepSeek adapter</strong>
+            </label>
+            <p id="deepSeekShadowStatus">关闭。页面仍由本地小人试走驱动。</p>
+            <pre id="deepSeekShadowOutput" hidden></pre>
+            <label class="shadow-toggle">
+              <input id="deepSeekPacketToggle" type="checkbox" />
+              <strong>Little Walker packet adapter</strong>
+            </label>
+            <p id="deepSeekPacketStatus">关闭。Little Walker Packet 仍由本地 mock 校验。</p>
+            <label class="shadow-toggle">
+              <input id="deepSeekPacketStagePreviewToggle" type="checkbox" />
+              <strong>Use model packet for stage preview</strong>
+            </label>
+            <p id="deepSeekPacketStagePreviewStatus">Model preview：local mock。</p>
+            <div class="shadow-summary" id="deepSeekPacketSummary" hidden></div>
+            <details class="shadow-json-details" id="deepSeekPacketDetails" hidden>
+              <summary>查看完整 packet JSON</summary>
+              <pre id="deepSeekPacketOutput"></pre>
+            </details>
+          </div>
+        </details>
+
+        <details class="side-details" id="sideDetails">
+          <summary>查看详细记录</summary>
+
+          <h2>摩擦结果</h2>
+          <div class="result-card" id="resultCard" aria-live="polite"></div>
+          <div class="observer-check-card" id="observerCheckCard" aria-live="polite"></div>
+
+          <h2>沙盒状态</h2>
+          <div class="signals" id="signals"></div>
+
+          <h2>现场反应</h2>
+          <div class="state-feed" id="stateFeed"></div>
+
+          <h2>过程记录</h2>
+          <ol class="event-log" id="eventLog"></ol>
+        </details>
+      </section>
+    </main>
+
+    <script src="./data/sample-simulation.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

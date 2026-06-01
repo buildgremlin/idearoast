@@ -1,0 +1,11 @@
+{
+  "name": "idearoast",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A local-first idea stress-test sandbox with an optional model adapter preview.",
+  "license": "MIT",
+  "scripts": {
+    "start": "node tools/local-static-server.mjs",
+    "check": "node --check app.js && node --check data/sample-simulation.js && node --check tools/local-static-server.mjs && node --check tools/ai-doorway-judge-runtime.mjs && node --check tools/deepseek-shadow-runtime.mjs && node --check tools/little-walker-runtime.mjs"
+  }
+}
