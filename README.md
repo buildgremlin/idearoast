@@ -63,6 +63,8 @@ Set these values in your local server environment, or load a private `.env` with
 
 IdeaRoast is local-first. You can keep the browser UI unchanged and add your own server-side provider adapter.
 
+Contributors can modify any part of the project, but the highest-leverage path for improving IdeaRoast's real usefulness is usually a server-side model adapter that produces valid Little Walker packets. Start with `docs/MODEL_ADAPTER_FIRST_CONTRIBUTION.md` before wiring a real provider.
+
 Start from:
 
 - `tools/local-static-server.mjs`

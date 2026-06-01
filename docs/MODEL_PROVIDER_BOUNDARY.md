@@ -25,3 +25,5 @@ Use `.env.example` as a template if you want live model preview locally. Keep th
 ## Future Provider Adapters
 
 Future GPT, Gemini, Claude, or other providers can be added as server-side adapters behind the same boundary. This document is only a reserved direction; it does not introduce a provider marketplace, account system, database, or frontend key handling.
+
+Before adding a new provider, read `MODEL_ADAPTER_FIRST_CONTRIBUTION.md`. The goal is not only to call a model, but to return a validated Little Walker packet while keeping provider keys server-side.
