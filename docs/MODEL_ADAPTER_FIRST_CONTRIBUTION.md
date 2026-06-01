@@ -48,6 +48,8 @@ The important part is the loop: model output should be tested against concrete p
 
 This is pseudocode only. It does not connect a real provider.
 
+See `../examples/provider-adapter.contract.example.mjs` for the minimal adapter contract shape. Read this as a contract shape, not as a production provider implementation.
+
 ```js
 async function runProviderLittleWalkerPacket({
   input,
@@ -102,4 +104,3 @@ This is not:
 - a reason to put API keys in frontend code
 
 Provider adapters should preserve IdeaRoast's local-first shape and fallback behavior.
-
